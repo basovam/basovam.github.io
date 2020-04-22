@@ -107,47 +107,6 @@
 						ctx.fillText("SPEED: " + delay, 65, 590);
 					}
 		}
-		/*function mousedown(event) {
-			event = event || window.event;
-			var elem = document.getElementById("example");
-			var ctx = elem.getContext('2d');
-			var l = 0;
-			var t = 0;
-			while (elem)
-			{
-				l += elem.offsetLeft;
-				t += elem.offsetTop;
-				elem = elem.offsetParent;
-			}
-			var x = event.clientX-l;
-			var y = event.clientY-t;
-			alter (x,y)
-			if (y<551){
-				if (x<50) {
-					ctx.fillStyle="#ff0000";
-					ctx.fillRect(5,570,41,11);
-				}
-				else if (x>250) {
-					ctx.fillStyle="#ff0000";
-					ctx.fillRect(255,570,41,11);
-					ctx.fillRect(270,555,11,41);
-				}
-			}
-		}
-		function mouse-up(event) {
-			//x,y = get-coord(event);
-			if (y<551){
-				if (x<50) {
-					ctx.fillStyle="#000000";
-					ctx.fillRect(5,570,41,11);
-				}
-				else if (x>250) {
-					ctx.fillStyle="#000000";
-					ctx.fillRect(255,570,41,11);
-					ctx.fillRect(270,555,11,41);
-				}
-			}
-		}*/
 	</script>
 	</head>
 	<body>
@@ -185,6 +144,42 @@
 			ctx.fillRect(270,555,11,41);
 			ctx.font = 'bold 40px sans-serif';
 			ctx.fillText("SPEED: " + delay, 65, 590);
+			
+			example.addEventListener('mousedown', e => {
+				if (play == 0){
+					var elem = document.getElementById("example");
+					var ctx = elem.getContext('2d');
+					var l = 0;
+					var t = 0;
+					while (elem)
+					{
+						l += elem.offsetLeft;
+						t += elem.offsetTop;
+						elem = elem.offsetParent;
+					}
+					var x = event.clientX-l;
+					var y = event.clientY-t;
+					if (y>551){
+						if (x<50) {
+							ctx.fillStyle="#BB0000";
+							ctx.fillRect(5,570,41,11);
+						}
+						else if (x>250) {
+							ctx.fillStyle="#BB0000";
+							ctx.fillRect(255,570,41,11);
+							ctx.fillRect(270,555,11,41);
+						}
+					}
+				}
+			});
+			example.addEventListener('mouseup', e => {
+				var elem = document.getElementById("example");
+				var ctx = elem.getContext('2d');
+				ctx.fillStyle="#000000";
+				ctx.fillRect(5,570,41,11);
+				ctx.fillRect(255,570,41,11);
+				ctx.fillRect(270,555,11,41);
+			});
 		</script>
 	</body>
 </html>
