@@ -27,6 +27,7 @@
 			
 			example.addEventListener("touchstart", e => {
 				var elem = document.getElementById("example");
+				var ctx = elem.getContext('2d');
 				var touches = e.changedTouches;
 				for (var i = 0; i < touches.length; i++) {
 					ongoingTouches.push(copyTouch(touches[i]));
@@ -35,7 +36,7 @@
 				ctx.fillRect(50,50,50,50);
 			});
 			
-			example.addEventListener("touchend", e => {d = false;});
+			/*example.addEventListener("touchend", e => {d = false;});
 			
 			el.addEventListener("touchmove", e => {
 				var elem = document.getElementById("example");
@@ -52,7 +53,7 @@
 						ongoingTouches.splice(idx, 1, copyTouch(touches[i]));
 					}
 				}
-			});
+			});*/
 		</script>
 	</body>
 </html>
