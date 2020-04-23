@@ -25,20 +25,28 @@
 			ctx.stroke();
 			ongoingTouches = new Array();
 			
-			example.addEventListener("touchstart", e => {
-				var elem = document.getElementById("example");
-				var touches = evt.changedTouches;
-				for (var i = 0; i < touches.length; i++) {
-					ongoingTouches.push(copyTouch(touches[i]));
-				}
-			});
-			
-			example.addEventListener("touchend", e => {d = false;});
-			
-			el.addEventListener("touchmove", e => {
+			example.addEventListener('touchstart', e => {
 				var elem = document.getElementById("example");
 				var ctx = elem.getContext('2d');
-				var touches = evt.changedTouches;
+				ctx.fillStyle="#ff0000";
+				ctx.fillRect(50,50,50,50);
+				/*var touches = e.changedTouches;
+				for (var i = 0; i < touches.length; i++) {
+					ongoingTouches.push(copyTouch(touches[i]));
+				}*/
+			});
+			
+			example.addEventListener("touchend", e => {
+				var elem = document.getElementById("example");
+				var ctx = elem.getContext('2d');
+				ctx.fillStyle="#ffff00";
+				ctx.fillRect(150,150,50,50);
+			});
+			
+			/*el.addEventListener("touchmove", e => {
+				var elem = document.getElementById("example");
+				var ctx = elem.getContext('2d');
+				var touches = e.changedTouches;
 				for (var i = 0; i < touches.length; i++) {
 					var idx = ongoingTouchIndexById(touches[i].identifier);
 					if (idx >= 0) {
@@ -50,42 +58,7 @@
 						ongoingTouches.splice(idx, 1, copyTouch(touches[i]));
 					}
 				}
-			});
-			example.addEventListener('mousedown', e => {
-				if (play == 0){
-					var elem = document.getElementById("example");
-					var ctx = elem.getContext('2d');
-					var l = 0;
-					var t = 0;
-					while (elem)
-					{
-						l += elem.offsetLeft;
-						t += elem.offsetTop;
-						elem = elem.offsetParent;
-					}
-					var x = e.clientX-l;
-					var y = e.clientY-t;
-					if (y>551){
-						if (x<50) {
-							ctx.fillStyle="#BB0000";
-							ctx.fillRect(5,570,41,11);
-						}
-						else if (x>250) {
-							ctx.fillStyle="#BB0000";
-							ctx.fillRect(255,570,41,11);
-							ctx.fillRect(270,555,11,41);
-						}
-					}
-				}
-			});
-			example.addEventListener('mouseup', e => {
-				var elem = document.getElementById("example");
-				var ctx = elem.getContext('2d');
-				ctx.fillStyle="#000000";
-				ctx.fillRect(5,570,41,11);
-				ctx.fillRect(255,570,41,11);
-				ctx.fillRect(270,555,11,41);
-			});
+			});*/
 		</script>
 	</body>
 </html>
