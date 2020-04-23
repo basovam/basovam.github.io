@@ -28,8 +28,13 @@
 			example.addEventListener('touchstart', e => {
 				var elem = document.getElementById("example");
 				var ctx = elem.getContext('2d');
+				ctx.fillStyle="#000000";
+				ctx.font = 'bold 50px sans-serif';
+				ctx.fillText("START", 75, 543);
 				var touches = e.changedTouches;
 				for (var i = 0; i < touches.length; i++) {
+					ctx.fillText(touches[i].pageX, 50, 50+i*50);
+					ctx.fillText(touches[i].pageY, 150, 50+i*50);
 					ongoingTouches.push(copyTouch(touches[i]));
 				}
 			});
