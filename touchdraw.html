@@ -52,7 +52,9 @@
 				ctx.fillStyle="#000000";
 				ctx.font = 'bold 50px sans-serif';
 				for (var i = 0; i < touches.length; i++) {
-					var idx = ongoingTouchIndexById(touches[i].identifier);
+					var idx = 0;
+					for (var j = 0; j < ongoingTouches.length; i++) {
+						if (ongoingTouches[j].identifier == touches[i].identifier) idx = j;
 					ctx.fillText(idx, 50, 50+i*50);
 					if (idx >= 0) {
 						ctx.beginPath();
