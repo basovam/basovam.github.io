@@ -53,10 +53,11 @@
 				ctx.font = 'bold 50px sans-serif';
 				for (var i = 0; i < touches.length; i++) {
 					var idx = 0;
-					for (var j = 0; j < ongoingTouches.length; i++) {
+					ctx.fillText(ongoingTouches.length, 50, 50+i*50);
+					for (var j = 0; j < ongoingTouches.length; j++) {
 						if (ongoingTouches[j].identifier == touches[i].identifier) idx = j;
 					}
-					ctx.fillText(idx, 50, 50+i*50);
+					ctx.fillText(idx, 150, 50+i*50);
 					if (idx >= 0) {
 						ctx.beginPath();
 						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
