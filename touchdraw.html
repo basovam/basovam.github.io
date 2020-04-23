@@ -30,11 +30,10 @@
 				var ctx = elem.getContext('2d');
 				ctx.fillStyle="#000000";
 				ctx.font = 'bold 50px sans-serif';
-				ctx.fillText("START", 75, 543);
 				var touches = e.changedTouches;
 				for (var i = 0; i < touches.length; i++) {
-					ctx.fillText(touches[i].pageX, 50, 50+i*50);
-					ctx.fillText(touches[i].pageY, 150, 50+i*50);
+					//ctx.fillText(touches[i].pageX, 50, 50+i*50);
+					//ctx.fillText(touches[i].pageY, 150, 50+i*50);
 					ongoingTouches.push(copyTouch(touches[i]));
 				}
 			});
@@ -50,8 +49,11 @@
 				var elem = document.getElementById("example");
 				var ctx = elem.getContext('2d');
 				var touches = e.changedTouches;
+				ctx.fillStyle="#000000";
+				ctx.font = 'bold 50px sans-serif';
 				for (var i = 0; i < touches.length; i++) {
 					var idx = ongoingTouchIndexById(touches[i].identifier);
+					ctx.fillText(idx, 50, 50+i*50);
 					if (idx >= 0) {
 						ctx.beginPath();
 						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
