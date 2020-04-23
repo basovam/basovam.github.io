@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Life</title>
+		<meta charset='utf-8' />
+		<script>
+
+	</script>
+	</head>
+	<body>
+		<center><canvas height='601' width='301' id='example'>Обновите браузер</canvas>
+		</center>
+		<script>
+			var example = document.getElementById("example");
+			var ctx = example.getContext('2d');
+			ctx.fillStyle="#ffffff";
+			ctx.fillRect(0,0,301,601);
+			ctx.fillStyle="#000000";
+			ctx.beginPath();
+			ctx.moveTo(0.5, 0.5);
+			ctx.lineTo(0.5, 600.5);
+			ctx.lineTo(300.5, 600.5);
+			ctx.lineTo(300.5, 0.5);
+			ctx.lineTo(0.5, 0.5);
+			ctx.stroke();
+			ongoingTouches = new Array();
+			
+			example.addEventListener("touchstart", e => {
+				var elem = document.getElementById("example");
+				var touches = evt.changedTouches;
+				for (var i = 0; i < touches.length; i++) {
+					ongoingTouches.push(copyTouch(touches[i]));
+				}
+			});
+			
+			example.addEventListener("touchend", e => {d = false;});
+			
+			el.addEventListener("touchmove", e => {
+				var elem = document.getElementById("example");
+				var ctx = elem.getContext('2d');
+				var touches = evt.changedTouches;
+				for (var i = 0; i < touches.length; i++) {
+					var idx = ongoingTouchIndexById(touches[i].identifier);
+					if (idx >= 0) {
+						ctx.beginPath();
+						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+						ctx.lineTo(touches[i].pageX, touches[i].pageY);
+						ctx.strokeStyle = "#000000";
+						ctx.stroke();
+						ongoingTouches.splice(idx, 1, copyTouch(touches[i]));
+					}
+				}
+			});
+			example.addEventListener('mousedown', e => {
+				if (play == 0){
+					var elem = document.getElementById("example");
+					var ctx = elem.getContext('2d');
+					var l = 0;
+					var t = 0;
+					while (elem)
+					{
+						l += elem.offsetLeft;
+						t += elem.offsetTop;
+						elem = elem.offsetParent;
+					}
+					var x = e.clientX-l;
+					var y = e.clientY-t;
+					if (y>551){
+						if (x<50) {
+							ctx.fillStyle="#BB0000";
+							ctx.fillRect(5,570,41,11);
+						}
+						else if (x>250) {
+							ctx.fillStyle="#BB0000";
+							ctx.fillRect(255,570,41,11);
+							ctx.fillRect(270,555,11,41);
+						}
+					}
+				}
+			});
+			example.addEventListener('mouseup', e => {
+				var elem = document.getElementById("example");
+				var ctx = elem.getContext('2d');
+				ctx.fillStyle="#000000";
+				ctx.fillRect(5,570,41,11);
+				ctx.fillRect(255,570,41,11);
+				ctx.fillRect(270,555,11,41);
+			});
+		</script>
+	</body>
+</html>
