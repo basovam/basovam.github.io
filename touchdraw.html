@@ -65,6 +65,7 @@
 						ctx.strokeStyle = "#00ff00";
 						ctx.stroke();*/
 						ctx.fillRect(touches[i].pageX, touches[i].pageY, 5, 5)
+						ctx.fillRect(50, 200, 50, 50)
 						ctx.fillText(touches[i].pageY, 100, 150+i*50);
 						ctx.fillText(touches[i].pageX, 100, 50+i*50);
 						ongoingTouches.splice(idx, 1, {identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
