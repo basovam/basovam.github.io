@@ -64,7 +64,17 @@
 						ctx.lineWidth = 4;
 						ctx.strokeStyle = "#00ff00";
 						ctx.stroke();*/
-						ctx.fillRect(touches[i].clientX, touches[i].clientY, 5, 5)
+						var l = 0;
+						var t = 0;
+						while (elem)
+						{
+							l += elem.offsetLeft;
+							t += elem.offsetTop;
+							elem = elem.offsetParent;
+						}
+						var x = touches[i].clientX-l;
+						var y = touches[i].clientY-t;
+						ctx.fillRect(x, y, 5, 5)
 						ctx.fillText(touches[i].clientY, 100, 150+i*50);
 						ctx.fillText(touches[i].clientX, 100, 50+i*50);
 						ongoingTouches.splice(idx, 1, {identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
