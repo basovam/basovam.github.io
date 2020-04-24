@@ -58,7 +58,7 @@
 						if (ongoingTouches[j].identifier == touches[i].identifier) idx = j;
 					}
 					if (idx >= 0) {
-						ctx.fillText(idx, 150, 50+i*50);
+						ctx.fillText(ongoingTouches[idx].pageX, 150, 50+i*50);
 						ctx.beginPath();
 						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
 						ctx.lineTo(touches[i].pageX, touches[i].pageY);
