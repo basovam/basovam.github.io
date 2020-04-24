@@ -59,12 +59,13 @@
 					}
 					if (idx >= 0) {
 						ctx.fillText(touches[i].pageX, 150, 50+i*50);
-						ctx.beginPath();
+						/*ctx.beginPath();
 						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
 						ctx.lineTo(touches[i].pageX, touches[i].pageY);
 						ctx.lineWidth = 4;
 						ctx.strokeStyle = "#00ff00";
-						ctx.stroke();
+						ctx.stroke();*/
+						ctx.fillRect(touches[i].pageX, touches[i].pageY,5,5)
 						ongoingTouches.splice(idx, 1);
 						ongoingTouches.push({identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
 					}
