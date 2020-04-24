@@ -24,7 +24,7 @@
 			ctx.lineTo(0.5, 0.5);
 			ctx.stroke();
 			ongoingTouches = new Array();
-			
+			//5
 			example.addEventListener('touchstart', e => {
 				var elem = document.getElementById("example");
 				var ctx = elem.getContext('2d');
@@ -62,9 +62,10 @@
 						ctx.beginPath();
 						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
 						ctx.lineTo(touches[i].pageX, touches[i].pageY);
-						ctx.strokeStyle = "#000000";
+						ctx.strokeStyle = "#00ff00";
 						ctx.stroke();
-						ongoingTouches.splice(idx, 1, {identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
+						ongoingTouches.splice(idx, 1);
+						ongoingTouches.push({identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
 					}
 				}
 			});
