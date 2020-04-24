@@ -25,12 +25,12 @@
 			ctx.stroke();
 			ongoingTouches = new Array();
 			
-			canvas.addEventListener("touchstart", function (e) { TouchStart(e); }); //Начало касания
-canvas.addEventListener("touchmove", function (e) { TouchMove(e); }); //Движение пальцем по экрану
+			example.addEventListener("touchstart", function (e) { TouchStart(e); }); //Начало касания
+example.addEventListener("touchmove", function (e) { TouchMove(e); }); //Движение пальцем по экрану
 //Пользователь отпустил экран
-canvas.addEventListener("touchend", function (e) { TouchEnd(e, "green"); });
+example.addEventListener("touchend", function (e) { TouchEnd(e, "green"); });
 //Отмена касания
-canvas.addEventListener("touchcancel", function (e) { TouchEnd(e, "red"); });
+example.addEventListener("touchcancel", function (e) { TouchEnd(e, "red"); });
 
 function TouchStart(e)
 {
