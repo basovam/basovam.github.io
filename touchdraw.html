@@ -42,7 +42,8 @@
 				var elem = document.getElementById("example");
 				var ctx = elem.getContext('2d');
 				ctx.fillStyle="#ffffff";
-				ctx.fillRect(1,1,299,599)
+				ctx.fillRect(1,1,299,599);
+				ongoingTouches.pop();
 			});
 			
 			example.addEventListener("touchmove", e => {
@@ -53,7 +54,6 @@
 				ctx.font = 'bold 50px sans-serif';
 				for (var i = 0; i < touches.length; i++) {
 					var idx = 0;
-					ctx.fillText(ongoingTouches.length, 50, 50+i*50);
 					for (var j = 0; j < ongoingTouches.length; j++) {
 						if (ongoingTouches[j].identifier == touches[i].identifier) idx = j;
 					}
@@ -64,10 +64,10 @@
 						ctx.lineWidth = 4;
 						ctx.strokeStyle = "#00ff00";
 						ctx.stroke();*/
+						ctx.fillStyle="#00ff00";
 						ctx.fillRect(touches[i].pageX, touches[i].pageY, 5, 5)
 						ctx.fillText(touches[i].pageX, 150, 50+i*50);
-						ongoingTouches.splice(idx, 1);
-						ongoingTouches.push({identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
+						ongoingTouches.splice(idx, 1, {identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
 					}
 				}
 			});
