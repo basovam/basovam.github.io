@@ -62,6 +62,7 @@
 						ctx.beginPath();
 						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
 						ctx.lineTo(touches[i].pageX, touches[i].pageY);
+						ctx.lineWidth = 4;
 						ctx.strokeStyle = "#00ff00";
 						ctx.stroke();
 						ongoingTouches.splice(idx, 1);
