@@ -58,12 +58,7 @@
 						if (ongoingTouches[j].identifier == touches[i].identifier) idx = j;
 					}
 					if (idx >= 0) {
-						/*ctx.beginPath();
-						ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-						ctx.lineTo(touches[i].pageX, touches[i].pageY);
-						ctx.lineWidth = 4;
-						ctx.strokeStyle = "#00ff00";
-						ctx.stroke();*/
+						
 						var l = 0;
 						var t = 0;
 						while (elem)
@@ -74,9 +69,12 @@
 						}
 						var x = touches[i].clientX-l;
 						var y = touches[i].clientY-t;
-						ctx.fillRect(x, y, 5, 5)
-						ctx.fillText(touches[i].clientY, 100, 150+i*50);
-						ctx.fillText(touches[i].clientX, 100, 50+i*50);
+						ctx.beginPath();
+						ctx.moveTo(ongoingTouches[idx].pageX-l, ongoingTouches[idx].pageY-t);
+						ctx.lineTo(x, y);
+						ctx.lineWidth = 4;
+						ctx.strokeStyle = "#00ff00";
+						ctx.stroke();
 						ongoingTouches.splice(idx, 1, {identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
 					}
 				}
