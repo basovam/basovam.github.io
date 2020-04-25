@@ -13,7 +13,7 @@
 		<script>
 			var canv = document.getElementById("Circle");
 			var elem = canv
-			a = 0;
+			a = [0,0,0];
 			offsetX = 0;
 			offsetY = 0;
 			while (elem)
@@ -26,70 +26,160 @@
 			ctx.fillStyle="#ffffff";
 			ctx.fillRect(0,0,301,601);
 			ctx.fillStyle="#000000";
-			/*ctx.beginPath();
-			ctx.moveTo(0.5, 0.5);
-			ctx.lineTo(0.5, 600.5);
-			ctx.lineTo(300.5, 600.5);
-			ctx.lineTo(300.5, 0.5);
-			ctx.lineTo(0.5, 0.5);
-			ctx.closePath();
-			ctx.stroke();*/
 			
-			ctx.beginPath();
-            ctx.arc(150.5, 300.5, 15, Math.PI/4+a, 2*Math.PI/4+a,true);
-            ctx.arc(150.5, 300.5, 135, 2*Math.PI/4+a, Math.PI/4+a,false);
-            ctx.closePath();
-			ctx.stroke();
+			var color_array = ["aqua", "navy", "green", "olive", "teal", "blue", "lime", "purple", "fuchsia", "maroon", "red", "yellow"];
+			circle_colors = new Array();
+			for (i = 0; i < 3; i++)
+            {
+                color_array.sort(function(){ return Math.random() - 0.5; });
+				circle_colors.push(new Array());
+                for (j = 0; j < 6; j++)
+                {
+                    ctx.beginPath();
+                    ctx.arc(150.5, 300.5, 15+40*i, j*2*Math.PI/6+a[i], (j+1)*2*Math.PI/6+a[i],false);
+                    ctx.arc(150.5, 300.5, 15+40*(i+1), (j+1)*2*Math.PI/6+a[i], j*2*Math.PI/6+a[i],true);
+                    ctx.closePath();
+					circle_colors[i].push(color_array[j]);
+                    ctx.fillStyle = circle_colors[i][j];
+					//ctx.fillStyle = color_array[j];
+                    ctx.fill();
+                }
+            }
 			
-			/*ctx.beginPath();
-            ctx.arc(150.5, 300.5, 55, 3*Math.PI/4, 4*Math.PI/4,true);
-            ctx.arc(150.5, 300.5, 95, 4*Math.PI/4, 3*Math.PI/4,false);
-            ctx.closePath();
-			ctx.stroke();
-			
-			ctx.beginPath();
-            ctx.arc(150.5, 300.5, 95, 3*Math.PI/4, 4*Math.PI/4,true);
-            ctx.arc(150.5, 300.5, 135, 4*Math.PI/4, 3*Math.PI/4,false);
-            ctx.closePath();
-			ctx.stroke();*/
-			
-			ongoingTouches = new Array();
+			currentPoint = {pageX: 0, pageY: 0};
+			t = false;
 			
 			canv.addEventListener('touchstart', e => {
 				var touches = e.changedTouches;
-				for (var i = 0; i < touches.length; i++) {
-					ongoingTouches.push({identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
-				}
+				currentPoint.pageX = touches[0].pageX;
+				currentPoint.pageY = touches[0].pageY;
+			});
+			canv.addEventListener('mousedown', e => {
+				currentPoint.pageX = e.clientX;
+				currentPoint.pageY = e.clientY;
+				t = true;
 			});
 			
 			canv.addEventListener("touchmove", e => {
 				var elem = document.getElementById("Circle");
 				var ctx = elem.getContext('2d');
 				var touches = e.changedTouches;
-				for (var i = 0; i < touches.length; i++) {
-					var idx = 0;
-					for (var j = 0; j < ongoingTouches.length; j++) {
-						if (ongoingTouches[j].identifier == touches[i].identifier) idx = j;
-					}
-					if (idx >= 0) {
-						var x = ongoingTouches[idx].pageX-offsetX;
-						var y = ongoingTouches[idx].pageY-offsetY;
-						var a1 = Math.acos((150.5-x)/Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y)));
-						x = touches[i].pageX-offsetX;
-						y = touches[i].pageY-offsetY;
-						var a2 = Math.acos((150.5-x)/Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y)));
-						a += a1 - a2;
-						ctx.fillStyle="#ffffff";
-						ctx.fillRect(0,0,301,601);
-						ctx.fillStyle="#000000";
-						ctx.beginPath();
-						ctx.arc(150.5, 300.5, 15, Math.PI/4+a, 2*Math.PI/4+a,true);
-						ctx.arc(150.5, 300.5, 135, 2*Math.PI/4+a, Math.PI/4+a,false);
-						ctx.closePath();
-						ctx.stroke();
-						ongoingTouches.splice(idx, 1, {identifier: touches[i].identifier, pageX: touches[i].pageX, pageY: touches[i].pageY});
+				var x = currentPoint.pageX-offsetX;
+				var y = currentPoint.pageY-offsetY;
+				var a1 = Math.acos((150.5-x)/Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y)));
+				x = touches[0].pageX-offsetX;
+				y = touches[0].pageY-offsetY;
+				var a2 = Math.acos((150.5-x)/Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y)));
+				r = Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y));
+				if ((r>15)&(r<=135)) {
+					if ((r>15)&(r<=55))
+						if (y>300.5) a[0] += a1 - a2;
+						else a[0] += a2 - a1;
+					else if ((r>55)&(r<=95))
+						if (y>300.5) a[1] += a1 - a2;
+						else a[1] += a2 - a1;
+					else if ((r>95)&(r<=135))
+						if (y>300.5) a[2] += a1 - a2;
+						else a[2] += a2 - a1;
+					ctx.fillStyle="#ffffff";
+					ctx.fillRect(0,0,301,601);
+					for (i = 0; i < 3; i++) {
+						for (j = 0; j < 6; j++) {
+							ctx.beginPath();
+							ctx.arc(150.5, 300.5, 15+40*i, j*2*Math.PI/6+a[i], (j+1)*2*Math.PI/6+a[i],false);
+							ctx.arc(150.5, 300.5, 15+40*(i+1), (j+1)*2*Math.PI/6+a[i], j*2*Math.PI/6+a[i],true);
+							ctx.closePath();
+							ctx.fillStyle = circle_colors[i][j];
+							ctx.fill();
+						}
 					}
 				}
+				currentPoint.pageX = touches[0].pageX;
+				currentPoint.pageY = touches[0].pageY;
+			});
+			canv.addEventListener('mousemove', e => {
+				if (t) {
+					var elem = document.getElementById("Circle");
+					var ctx = elem.getContext('2d');
+					var x = currentPoint.pageX-offsetX;
+					var y = currentPoint.pageY-offsetY;
+					var a1 = Math.acos((150.5-x)/Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y)));
+					x = e.clientX-offsetX;
+					y = e.clientY-offsetY;
+					var a2 = Math.acos((150.5-x)/Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y)));
+					r = Math.sqrt((150.5-x)*(150.5-x)+(300.5-y)*(300.5-y));
+					if ((r>15)&(r<=135)) {
+						if ((r>15)&(r<=55))
+							if (y>300.5) a[0] += a1 - a2;
+							else a[0] += a2 - a1;
+						else if ((r>55)&(r<=95))
+							if (y>300.5) a[1] += a1 - a2;
+							else a[1] += a2 - a1;
+						else if ((r>95)&(r<=135))
+							if (y>300.5) a[2] += a1 - a2;
+							else a[2] += a2 - a1;
+						ctx.fillStyle="#ffffff";
+						ctx.fillRect(0,0,301,601);
+						for (i = 0; i < 3; i++) {
+							for (j = 0; j < 6; j++) {
+								ctx.beginPath();
+								ctx.arc(150.5, 300.5, 15+40*i, j*2*Math.PI/6+a[i], (j+1)*2*Math.PI/6+a[i],false);
+								ctx.arc(150.5, 300.5, 15+40*(i+1), (j+1)*2*Math.PI/6+a[i], j*2*Math.PI/6+a[i],true);
+								ctx.closePath();
+								ctx.fillStyle = circle_colors[i][j];
+								ctx.fill();
+							}
+						}
+					}
+					currentPoint.pageX = e.clientX;
+					currentPoint.pageY = e.clientY;
+				}
+			});
+			
+			canv.addEventListener("touchend", e => {
+				for (var i = 0; i < 3; i++) {
+					var angdif = a[i] / (Math.PI/3);
+					var angkof = Math.floor(angdif);
+					angdif = angdif - angkof;
+					if (angdif < 0.15) a[i] = angkof*Math.PI/3;
+					else if (angdif > 0.85) a[i] = (angkof+1)*Math.PI/3;
+				}
+				ctx.fillStyle="#ffffff";
+				ctx.fillRect(0,0,301,601);
+				for (i = 0; i < 3; i++) {
+					for (j = 0; j < 6; j++) {
+						ctx.beginPath();
+						ctx.arc(150.5, 300.5, 15+40*i, j*2*Math.PI/6+a[i], (j+1)*2*Math.PI/6+a[i],false);
+						ctx.arc(150.5, 300.5, 15+40*(i+1), (j+1)*2*Math.PI/6+a[i], j*2*Math.PI/6+a[i],true);
+						ctx.closePath();
+						ctx.fillStyle = circle_colors[i][j];
+						ctx.fill();
+					}
+				}
+			});
+			canv.addEventListener('mouseup', e => {
+				if (t) {
+					for (var i = 0; i < 3; i++) {
+						var angdif = a[i] / (Math.PI/3);
+						var angkof = Math.floor(angdif);
+						angdif = angdif - angkof;
+						if (angdif < 0.15) a[i] = angkof*Math.PI/3;
+						else if (angdif > 0.85) a[i] = (angkof+1)*Math.PI/3;
+					}
+					ctx.fillStyle="#ffffff";
+					ctx.fillRect(0,0,301,601);
+					for (i = 0; i < 3; i++) {
+						for (j = 0; j < 6; j++) {
+							ctx.beginPath();
+							ctx.arc(150.5, 300.5, 15+40*i, j*2*Math.PI/6+a[i], (j+1)*2*Math.PI/6+a[i],false);
+							ctx.arc(150.5, 300.5, 15+40*(i+1), (j+1)*2*Math.PI/6+a[i], j*2*Math.PI/6+a[i],true);
+							ctx.closePath();
+							ctx.fillStyle = circle_colors[i][j];
+							ctx.fill();
+						}
+					}
+				}
+				t = false;
 			});
 		</script>
 	</body>
